@@ -1,35 +1,18 @@
-//rendering all names to the to/from options
-
-//what im trying to do here is after I get the response of all the Users
-// back from /api/users, i want to load all the users into the to/from options drop downs.
-
-(function() {
-    $.get('/api/users').then(function(data) {
-        console.log(data);
-        let dbUsers = [];
-        dbUsers.push(data);
-        console.log(dbUsers[1]);
-        for(let i = 0; i < dbUsers.length; i++) {
-            let eachUser = dbUsers[i].username;
-            console.log(eachUser);
-            const select = document.getElementById('to');
-            for(i in eachUser) {
-                select.options[select.options.length] = new Option(newObject[i], i);
+//rendering kudos message
+const render = function() {
+        $.get('/api/kudos', function(dbKudos) {
+            $('.main-content').empty();
+            for (let i = 0; i < dbKudos.length; i++) {
+                $(`<div class="row">
+                <div class="column">
+                <h4>${dbKudos[i].title}</h4>
+                <p> ${dbKudos[i].body} </p>
+                <strong><p>To: ${dbKudos[i].to} </p></strong>
+                <strong><p>From: ${dbKudos[i].from} </p></strong>
+                </div>
+            </div>`).appendTo('.main-content');
             }
-        }
-    });
-})();
-
-//rendering message
-const render = function(dataList) {
-        console.log(dataList.body);
-            $(`<div class="row">
-            <div class="column">
-                <strong><p>To:${dataList._id}</p></strong>
-                <p>${dataList.body}</p>
-                <strong><p>From:${dataList._v}</p></strong>
-            </div>
-        </div>`).appendTo('.main-content');
+        });
 }
 
 const displayUsers = function(){
@@ -38,8 +21,8 @@ const displayUsers = function(){
         console.log(dbUsers.length);
         $('#to').empty();
         $('#from').empty();
-        $('#to').append(`<option selected="" disabled="" value="">Select Sender</option>`) 
-            $('#from').append(`<option selected="" disabled="" value="">Select Reciever</option>`)
+        $('#to').append(`<OPTION value="">Select Sender</OPTION>`) 
+            $('#from').append(`<OPTION value="">Select Reciever</OPTION>`)
         for (let i = 0; i < dbUsers.length; i++){
             $('#to').append(`<OPTION value="${dbUsers[i]._id}">${dbUsers[i].name}</OPTION>`);
             $('#from').append(`<OPTION value="${dbUsers[i]._id}">${dbUsers[i].name}</OPTION>`)
@@ -51,14 +34,14 @@ $('#myBtn').on('click', displayUsers);
 
 const postKudos = function(e) {
     e.preventDefault();
-
-    const userId = sessionStorage.getItem('token');
+    const title = $('#title').val();
     const to = $('#to').val();
+    const from = $('#from').val();
     const kudosBody = $('.message').val().trim();
     $('.message').val('');
-    $.post('api/kudos', {to: to, userId: userId, body: kudosBody})
+    $.post('api/kudos', {title: title, body: kudosBody, to: to, from: from})
     .then(function(data) {
-        getKudos();
+        render();
     })
 }
 

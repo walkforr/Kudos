@@ -3,16 +3,6 @@ const Kudos = require('../models/Kudos');
 
 module.exports = function (app) {
 
-  app.post('/api/session', function (req, res) {
-    User.find(req.body)
-    .then(function (data) {
-      res.json(data);
-    })
-    .catch(function (err) {
-      res.json(err);
-    });
-  });
-
   //populate kudos property on User model
   app.get('/api/users', function (req, res) {
     User.find({})
@@ -37,12 +27,22 @@ module.exports = function (app) {
     });
   });
 
+//get all kudos
+  app.get('/api/kudos', function (req, res) {
+    Kudos.find({}).then(function (dbKudos) {
+        res.json(dbKudos);
+    }).catch(function (err) {
+        res.json(err);
+    });
+})
+
   //add new kudos post to db
   app.post('/api/kudos', function (req, res) {
     const newEntry = {
+      title: req.body.title,
+      body: req.body.body,
       to: req.body.to,
-      from: req.body.from,
-      body: req.body.body
+      from: req.body.from
     }
 
     Kudos.create(newEntry)
