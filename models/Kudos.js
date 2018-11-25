@@ -16,7 +16,7 @@ const KudosSchema = new Schema({
     from: {
         type: String,
         trim: true,
-        required: 'Please select who it is from.'
+        required: 'Please select who the kudos is from.'
     }
 });
 

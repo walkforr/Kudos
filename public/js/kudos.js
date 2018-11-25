@@ -14,6 +14,7 @@ const render = function() {
             }
         });
 }
+render();
 
 const displayUsers = function(){
     $.get('/api/users').then(function(dbUsers){
@@ -21,11 +22,11 @@ const displayUsers = function(){
         console.log(dbUsers.length);
         $('#to').empty();
         $('#from').empty();
-        $('#to').append(`<OPTION value="">Select Sender</OPTION>`) 
-            $('#from').append(`<OPTION value="">Select Reciever</OPTION>`)
+        $('#to').append(`<OPTION selected="" disabled="" value="">Select Sender</OPTION>`) 
+            $('#from').append(`<OPTION selected="" disabled="" value="">Select Reciever</OPTION>`)
         for (let i = 0; i < dbUsers.length; i++){
-            $('#to').append(`<OPTION value="${dbUsers[i]._id}">${dbUsers[i].name}</OPTION>`);
-            $('#from').append(`<OPTION value="${dbUsers[i]._id}">${dbUsers[i].name}</OPTION>`)
+            $('#to').append(`<OPTION data-val="${dbUsers[i]._id}" value="${dbUsers[i].name}">${dbUsers[i].name}</OPTION>`);
+            $('#from').append(`<OPTION data-val="${dbUsers[i]._id}" value="${dbUsers[i].name}">${dbUsers[i].name}</OPTION>`)
         }
     });
 }

@@ -12,6 +12,7 @@ body {
     line-height: 1.7;
     color: #777;
     padding: 30px;
+    position: relative;
 }
 
 .header {
@@ -29,6 +30,9 @@ body {
 
 }
 
+.main-content {
+
+}
 
 
 /* give kudos button  */
@@ -112,6 +116,7 @@ button:hover:after {
     border-radius: 10px 0 0 0;
     padding: 20px;
 }
+
 
 /* navbar */
 
