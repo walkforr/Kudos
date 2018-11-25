@@ -13,23 +13,10 @@ module.exports = function (app) {
     });
   });
 
-  //get all users
+  //populate kudos property on User model
   app.get('/api/users', function (req, res) {
-    User.find({}, function(err, users) {
-      var userMap = {};
-
-      users.forEach(function(user) {
-        userMap[user._id] = user;
-      });
-      res.send(userMap);
-    });
-  });
-
-  app.get('/api/user/:id', function (req, res) {
-    User.find({_id: req.params.id})
+    User.find({})
     .populate('kudos')
-    .populate('to')
-    .populate('from')
     .then(function (data) {
       console.log('data', data)
       res.json(data);
@@ -39,6 +26,7 @@ module.exports = function (app) {
     });
   });
 
+  //add new user to db
   app.post('/api/user', function (req, res) {
     User.create(req.body)
     .then(function (data) {
@@ -49,8 +37,8 @@ module.exports = function (app) {
     });
   });
 
+  //add new kudos post to db
   app.post('/api/kudos', function (req, res) {
-    const userId = req.body.userId;
     const newEntry = {
       to: req.body.to,
       from: req.body.from,
@@ -59,8 +47,14 @@ module.exports = function (app) {
 
     Kudos.create(newEntry)
       .then(function (kudosData) {
-        return User.findOneAndUpdate({_id: userId}, { $set: { kudos: kudosData._id } }, { new: true });
-    })
+        return User.updateMany(({ _id: req.body.to_id} || {_id: req.body.from_id }),
+        {
+            $push: {
+                kudos: kudosData._id
+            }
+
+        });
+})
     .then(function(userData) {
       res.json(userData);
     })

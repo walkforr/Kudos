@@ -2,14 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const KudosSchema = new Schema({
+    title: {
+      type: String,
+      time: true,
+      required: 'Please put a title.'  
+    },
     body: String,
     to: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        trim: true,
+        required: 'Please select a user to send to.'
     },
     from: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        trim: true,
+        required: 'Please select who it is from.'
     }
 });
 

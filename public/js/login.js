@@ -1,44 +1,20 @@
  const register = function(e) {
      e.preventDefault();
-    const username = $('.username').val().trim();
-    const password = $('.password').val().trim();
+    const name = $('.username').val().trim();
 
     //add user to database upon signup
     $.post('/api/user', {
-        username: username, password: password
-    }).then(function(data) {
-        console.log(data);
-    });
+        name: name
+    }).then(function(success) {
+        console.log(success);
+        if (success) {
+            $('.username').val('');
+            $('#myModal3').css('display', 'none');
+            alert('Great! Your name is now added to the list of people who can send and recieve Kudos.')
+        } else if ($('.username').val('')) {
+            alert('You must enter a name to register');
+        }
+    })
  }
 
  $('.signUp').on('click', register);
-
- const login = function(e) {
-     e.preventDefault();
-     const username = $('username1').val();
-     const password = $('password1').val();
-
-     $.post('/api/session', {
-         username: username, password: password
-     }).then(function(data) {
-         if(data[0]._id){
-            sessionStorage.setItem('token', data[0]._id)
-         }
-     })
- }
-
- $('.signOut').on('click', login);
-
- const logout = function(e) {
-    e.preventDefault();
-
-    $.post('/api/session', {
-        username: username, password: password
-    }).then(function(data) {
-        if(data[0]._id){
-           sessionStorage.removeItem('token', data[0]._id)
-        }
-    })
-}
-
-$('.signIn').on('click', login)

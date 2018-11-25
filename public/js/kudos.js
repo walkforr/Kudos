@@ -32,18 +32,22 @@ const render = function(dataList) {
         </div>`).appendTo('.main-content');
 }
 
-const getKudos = function(){
-    const userId = sessionStorage.getItem('token');
-    console.log(userId);
-
-    $.get(`/api/user/${userId}`).then(function(data){
-        console.log(data);
-        console.log(data[0].kudos);
-        render(data[0].kudos)
+const displayUsers = function(){
+    $.get('/api/users').then(function(dbUsers){
+        console.log(dbUsers);
+        console.log(dbUsers.length);
+        $('#to').empty();
+        $('#from').empty();
+        $('#to').append(`<option selected="" disabled="" value="">Select Sender</option>`) 
+            $('#from').append(`<option selected="" disabled="" value="">Select Reciever</option>`)
+        for (let i = 0; i < dbUsers.length; i++){
+            $('#to').append(`<OPTION value="${dbUsers[i]._id}">${dbUsers[i].name}</OPTION>`);
+            $('#from').append(`<OPTION value="${dbUsers[i]._id}">${dbUsers[i].name}</OPTION>`)
+        }
     });
 }
 
-getKudos();
+$('#myBtn').on('click', displayUsers);
 
 const postKudos = function(e) {
     e.preventDefault();
