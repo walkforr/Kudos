@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    to: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    from: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
+    // to: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User'
+    // },
+    // from: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User'
+    // },
     username: {
         type: String,
         trim: true,
@@ -20,12 +20,11 @@ const UserSchema = new Schema({
         trim: true,
         required: 'Password is Required'
     },
-    kudos: [
+    kudos:
         {
             type: Schema.Types.ObjectId,
-            ref: 'Note'
+            ref: 'Kudos'
         }
-    ]
 });
 
 const User = mongoose.model('User', UserSchema);

@@ -5,6 +5,6 @@ const KudosSchema = new Schema({
     body: String
 });
 
-const Kudos = mongoose.model('Kudos', NoteSchema);
+const Kudos = mongoose.model('Kudos', KudosSchema);
 
 module.exports = Kudos;
