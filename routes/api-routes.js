@@ -28,6 +28,8 @@ module.exports = function (app) {
   app.get('/api/user/:id', function (req, res) {
     User.find({_id: req.params.id})
     .populate('kudos')
+    .populate('to')
+    .populate('from')
     .then(function (data) {
       console.log('data', data)
       res.json(data);
@@ -50,6 +52,8 @@ module.exports = function (app) {
   app.post('/api/kudos', function (req, res) {
     const userId = req.body.userId;
     const newEntry = {
+      to: req.body.to,
+      from: req.body.from,
       body: req.body.body
     }
 

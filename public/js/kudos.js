@@ -1,35 +1,35 @@
 //rendering all names to the to/from options
 
 //what im trying to do here is after I get the response of all the Users
-// back from /api/users
+// back from /api/users, i want to load all the users into the to/from options drop downs.
 
-// (function() {
-//     $.get('/api/users').then(function(data) {
-//         console.log(data);
-//         let dbUsers = [];
-//         console.log(dbUsers);
-//         for(let i = 0; i < dbUsers.length; i++) {
-//             let eachUser = dbUsers[i].username;
-//             console.log(eachUser);
-//             const select = document.getElementById('to');
-//             for(i in eachUser) {
-//                 select.options[select.options.length] = new Option(newObject[i], i);
-//             }
-//         }
-//     });
-// })();
+(function() {
+    $.get('/api/users').then(function(data) {
+        console.log(data);
+        let dbUsers = [];
+        dbUsers.push(data);
+        console.log(dbUsers[1]);
+        for(let i = 0; i < dbUsers.length; i++) {
+            let eachUser = dbUsers[i].username;
+            console.log(eachUser);
+            const select = document.getElementById('to');
+            for(i in eachUser) {
+                select.options[select.options.length] = new Option(newObject[i], i);
+            }
+        }
+    });
+})();
 
 //rendering message
 const render = function(dataList) {
         console.log(dataList.body);
-        $('.row').empty();
-            $('.main-content').append(` <div class="row">
+            $(`<div class="row">
             <div class="column">
                 <strong><p>To:${dataList._id}</p></strong>
                 <p>${dataList.body}</p>
                 <strong><p>From:${dataList._v}</p></strong>
             </div>
-        </div>`);
+        </div>`).appendTo('.main-content');
 }
 
 const getKudos = function(){
@@ -49,9 +49,10 @@ const postKudos = function(e) {
     e.preventDefault();
 
     const userId = sessionStorage.getItem('token');
+    const to = $('#to').val();
     const kudosBody = $('.message').val().trim();
     $('.message').val('');
-    $.post('api/kudos', {userId: userId, body: kudosBody})
+    $.post('api/kudos', {to: to, userId: userId, body: kudosBody})
     .then(function(data) {
         getKudos();
     })
