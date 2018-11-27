@@ -4,19 +4,19 @@ const Schema = mongoose.Schema;
 const KudosSchema = new Schema({
     title: {
       type: String,
-      time: true,
+      trim: true,
       required: 'Please put a title.'  
     },
     body: String,
     to: {
         type: String,
         trim: true,
-        required: 'Please select a user to send to.'
+        required: 'Please select a to user.'
     },
     from: {
         type: String,
         trim: true,
-        required: 'Please select who the kudos is from.'
+        required: 'Please select a from user.'
     }
 });
 

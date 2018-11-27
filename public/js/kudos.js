@@ -10,13 +10,13 @@ const render = function() {
                 <strong><p>To: ${dbKudos[i].to} </p></strong>
                 <strong><p>From: ${dbKudos[i].from} </p></strong>
                 </div>
-            </div>`).appendTo('.main-content');
+            </div><br>`).prependTo('.main-content');
             }
         });
 }
 render();
 
-const displayUsers = function(){
+const loadUsers = function(){
     $.get('/api/users').then(function(dbUsers){
         console.log(dbUsers);
         console.log(dbUsers.length);
@@ -31,7 +31,7 @@ const displayUsers = function(){
     });
 }
 
-$('#myBtn').on('click', displayUsers);
+$('#myBtn').on('click', loadUsers);
 
 const postKudos = function(e) {
     e.preventDefault();

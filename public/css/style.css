@@ -27,13 +27,14 @@ body {
     position: relative;
 
     clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100% );
-
 }
 
 .main-content {
-
+    position: absolute;
+    top: 25%;
+    margin: 30px;
+    margin: 50px;
 }
-
 
 /* give kudos button  */
 
@@ -108,10 +109,10 @@ button:hover:after {
 /* main view -- Kudos */
 
 .row {
-    position: absolute;
+    /* position: absolute;
     width: 70%;
     top: 30%;
-    left: 20%;
+    left: 20%; */
     background: rgba(255, 255, 255, 0.625);
     border-radius: 10px 0 0 0;
     padding: 20px;
@@ -260,9 +261,6 @@ button:hover:after {
     cursor: pointer;
 }
 
-.container {
-
-}
 
 .row1 {
     display: flex;
@@ -365,6 +363,14 @@ h5 {
         padding: 20px;
         border: 1px solid #888;
         width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    .main-content {
+        position: absolute;
+        top: 20%;
+        left: .5%;
+        margin: 30px;
+        padding: 25px;
     }
 
     .message {

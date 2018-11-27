@@ -8,7 +8,8 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost/kudos', { useNewUrlParser: true });
+const MONGDOB_URI = process.env.MONGDOB_URI || 'mongodb://localhost/kudos';
+mongoose.connect(MONGDOB_URI, { useNewUrlParser: true });
 
 require('./routes/api-routes')(app);
 
